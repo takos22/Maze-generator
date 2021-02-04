@@ -11,10 +11,11 @@ class Generator:
         self.current = self.grid.start
         self.current.visited = True
 
-    def generate(self):
+    def generate(self, verbose: bool = False):
         while not all(cell.visited for cell in self.grid if cell.visitable):
             self.next()
-            print(self.grid)
+            if verbose:
+                print(self.grid)
 
     def next(self) -> Cell:
         self.current.add_neighbours(self.grid)

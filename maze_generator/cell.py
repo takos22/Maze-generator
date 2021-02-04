@@ -1,4 +1,5 @@
 from typing import Set
+import pygame
 
 
 class Cell:
@@ -75,3 +76,23 @@ class Cell:
         cell.obstacle = False
         cell.visited = True
         return cell
+
+    def draw(self, screen: pygame.Surface):
+        color = (0, 0, 0)
+        if self.obstacle:
+            color = (255, 255, 255)
+        elif self.start:
+            color = (255, 0, 0)
+        elif self.end:
+            color = (0, 255, 0)
+        elif self.visited:
+            color = (0, 0, 255)
+        pygame.draw.rect(
+            screen, color, pygame.Rect(self.x * 16, self.y * 16, 16, 16)
+        )
+
+    def reset(self):
+        self.neighbours = set()
+        self.visited = False
+        self.obstacle = self.x % 2 == 1 or self.y % 2 == 1
+        self.visitable = not self.obstacle

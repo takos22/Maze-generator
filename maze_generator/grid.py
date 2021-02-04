@@ -75,3 +75,7 @@ class Grid:
                 dump(json_grid, f)
 
         return json_grid
+
+    def reset(self):
+        for cell in self:
+            cell.reset()
