@@ -31,6 +31,13 @@ class Grid:
         self.start = self[start]
         self.end = self[end]
 
+        for x, column in enumerate(self._grid):
+            for y, cell in enumerate(column):
+                if x % 2 == 1 or y % 2 == 1:
+                    cell.obstacle = True
+                else:
+                    cell.visitable = True
+
     def __getitem__(self, pos: Tuple[int, int]) -> Cell:
         x, y = pos
         return self._grid[x][y]
@@ -61,7 +68,7 @@ class Grid:
 
             json_grid.append(json_column)
 
-        json_grid = [list(column) for column in zip(*self.json_grid)]
+        json_grid = [list(column) for column in zip(*json_grid)]
 
         if filename is not None:
             with open(filename, "w") as f:
