@@ -27,6 +27,7 @@ class Window:
 
         self.done = False
         self.algorithm = False
+        self.random_walls_removed = 0
 
         pygame.font.init()
         self.clock = pygame.time.Clock()
@@ -59,6 +60,10 @@ class Window:
         if not all(cell.visited for cell in self.grid if cell.visitable):
             return self.generator.next()
 
+        if self.random_walls_removed < (self.grid.width + self.grid.height) / 2:
+            self.random_walls_removed += 1
+            return self.generator.remove_random()
+
         self.algorithm = False
 
     def update_normal(self):
@@ -68,6 +73,7 @@ class Window:
                 self.grid.reset()
                 self.generator = Generator(self.grid)
                 self.algorithm = True
+                self.random_walls_removed = 0
                 return
 
     def draw(self):

@@ -77,6 +77,20 @@ class Cell:
         cell.visited = True
         return cell
 
+    def wall_between(self, grid, other: "Cell") -> bool:
+        cell = None
+
+        if self.x < other.x:
+            cell = grid[self.x + 1, self.y]
+        elif self.x > other.x:
+            cell = grid[self.x - 1, self.y]
+        elif self.y < other.y:
+            cell = grid[self.x, self.y + 1]
+        elif self.y > other.y:
+            cell = grid[self.x, self.y - 1]
+
+        return cell.obstacle
+
     def draw(self, screen: pygame.Surface):
         color = (0, 0, 0)
         if self.obstacle:
